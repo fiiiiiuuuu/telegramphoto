@@ -1,22 +1,9 @@
-import requests
 import os
 import dotenv
 import argparse
 from fetch_spacex_images import fetch_spacex_launch
 from nasa_apod_images import nasa_apod
 from nasa_epic_images import nasa_epic
-
-def download_photo():
-    url = "https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg"
-    filename = "hubble.jpeg"
-    filepath = os.path.join(folder, filename)
-
-    response = requests.get(url)
-    response.raise_for_status()
-
-    with open(filepath, 'wb') as file:
-        file.write(response.content)
-    print(f"Фото {filename} сохранено.")
 
 if __name__ == "__main__":
     dotenv.load_dotenv('.env')
@@ -28,9 +15,13 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser() 
     parser.add_argument('--launch_id')
+    parser.add_argument('--apod', action='store_true')
+    parser.add_argument('--epic', action='store_true')
     args = parser.parse_args()
 
-    download_photo()
-    fetch_spacex_launch(args.launch_id, folder)
-    nasa_apod(NASA_API, folder)
-    nasa_epic(NASA_API, folder)
+    if args.launch_id:
+        fetch_spacex_launch(args.launch_id, folder)
+    if args.apod:
+        nasa_apod(NASA_API, folder)
+    if args.epic:
+        nasa_epic(NASA_API, folder)
