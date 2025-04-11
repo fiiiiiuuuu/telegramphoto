@@ -7,10 +7,8 @@ def fetch_spacex_launch(launch_id=None, folder=None):
         url = f"https://api.spacexdata.com/v5/launches/{launch_id}"
     else:
         url = "https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a"
-    response = requests.get(url)
-    response.raise_for_status()
 
-    api_response = response.json()
+    api_response = requests.get(url).json()
 
     launch_links = api_response.get('links', {}).get('flickr', {}).get('original', {})
 

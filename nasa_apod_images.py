@@ -11,7 +11,7 @@ def get_file_extension(url: str):
     return ext.lower()
 
 
-def nasa_apod(api_key=None, folder=None, count=30):
+def download_nasa_apod(api_key, folder=None, count=30):
     url = f'https://api.nasa.gov/planetary/apod'
     payload = {'api_key': api_key,
                'count': count}

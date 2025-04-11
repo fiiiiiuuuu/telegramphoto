@@ -2,12 +2,12 @@ import os
 import dotenv
 import argparse
 from fetch_spacex_images import fetch_spacex_launch
-from nasa_apod_images import nasa_apod
-from nasa_epic_images import nasa_epic
+from nasa_apod_images import download_nasa_apod
+from nasa_epic_images import download_nasa_epic
 
 if __name__ == "__main__":
     dotenv.load_dotenv('.env')
-    NASA_API = os.getenv("NASA_API")
+    NASA_APIKEY = os.getenv("NASA_API")
 
     folder = "photos"
     if not os.path.exists(folder):
@@ -22,6 +22,6 @@ if __name__ == "__main__":
     if args.launch_id:
         fetch_spacex_launch(args.launch_id, folder)
     if args.apod:
-        nasa_apod(NASA_API, folder)
+        download_nasa_apod(NASA_APIKEY, folder)
     if args.epic:
-        nasa_epic(NASA_API, folder)
+        download_nasa_epic(NASA_APIKEY, folder)
