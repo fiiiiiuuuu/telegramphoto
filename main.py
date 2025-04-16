@@ -7,7 +7,7 @@ from nasa_epic_images import download_nasa_epic
 
 if __name__ == "__main__":
     dotenv.load_dotenv('.env')
-    NASA_APIKEY = os.getenv("NASA_API")
+    NASA_APIKEY = os.getenv("NASA_APIKEY")
 
     folder = "photos"
     if not os.path.exists(folder):
