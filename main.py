@@ -7,20 +7,20 @@ from nasa_epic_images import download_nasa_epic
 
 if __name__ == "__main__":
     dotenv.load_dotenv('.env')
-    NASA_API_KEY = os.getenv("NASA_API_KEY")
+    NASA_API_KEY = os.environ["NASA_API_KEY"]
 
-    folder = "photos"
-    if not os.path.exists(folder):
-        os.mkdir(folder)
-
-    parser = argparse.ArgumentParser() 
-    parser.add_argument('--launch_id')
-    parser.add_argument('--apod', action='store_true')
-    parser.add_argument('--epic', action='store_true')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--fld', help='название папки') 
+    parser.add_argument('--lid', help='айди для фото запусков spacex (необязательно)')
+    parser.add_argument('--apod', action='store_true', help='загрузка картинок дня')
+    parser.add_argument('--epic', action='store_true', help='загрузка фотографий земли')
     args = parser.parse_args()
 
-    if args.launch_id:
-        fetch_spacex_launch(args.launch_id, folder)
+    folder = args.fld
+    os.makedirs(folder, exist_ok=True)
+
+    if args.lid:
+        fetch_spacex_launch(args.lid, folder)
     if args.apod:
         download_nasa_apod(NASA_API_KEY, folder)
     if args.epic:
