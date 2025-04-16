@@ -19,8 +19,7 @@ def download_nasa_apod(api_key, folder=None, count=30):
     response.raise_for_status()
 
     data = response.json()
-    index = 1
-    for item in data:
+    for index, item in enumerate(data, start=1):
         if 'url' not in item:
             print('no url. skip')
             continue
@@ -41,4 +40,3 @@ def download_nasa_apod(api_key, folder=None, count=30):
             file.write(photo_response.content)
         
         print(f'Фото сохранено как: {filename}')
-        index += 1
