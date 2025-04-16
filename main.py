@@ -7,7 +7,7 @@ from nasa_epic_images import download_nasa_epic
 
 if __name__ == "__main__":
     dotenv.load_dotenv('.env')
-    NASA_APIKEY = os.getenv("NASA_APIKEY")
+    NASA_API_KEY = os.getenv("NASA_API_KEY")
 
     folder = "photos"
     if not os.path.exists(folder):
@@ -22,6 +22,6 @@ if __name__ == "__main__":
     if args.launch_id:
         fetch_spacex_launch(args.launch_id, folder)
     if args.apod:
-        download_nasa_apod(NASA_APIKEY, folder)
+        download_nasa_apod(NASA_API_KEY, folder)
     if args.epic:
-        download_nasa_epic(NASA_APIKEY, folder)
+        download_nasa_epic(NASA_API_KEY, folder)
