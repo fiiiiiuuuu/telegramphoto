@@ -12,6 +12,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--fld', help='название папки') 
     parser.add_argument('--lid', help='айди для фото запусков spacex (необязательно)')
+    parser.add_argument('--spacex', action='store_true', help='загрузка фоток SpaceX (если нету своего айди запуска)')    
     parser.add_argument('--apod', action='store_true', help='загрузка картинок дня')
     parser.add_argument('--epic', action='store_true', help='загрузка фотографий земли')
     args = parser.parse_args()
@@ -19,7 +20,7 @@ if __name__ == "__main__":
     folder = args.fld
     os.makedirs(folder, exist_ok=True)
 
-    if args.lid:
+    if args.lid or args.spacex:
         fetch_spacex_launch(args.lid, folder)
     if args.apod:
         download_nasa_apod(NASA_API_KEY, folder)
