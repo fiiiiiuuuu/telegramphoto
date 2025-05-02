@@ -2,7 +2,7 @@ import requests
 import os
 from urllib.parse import urlsplit, unquote
 from os.path import splitext, split
-
+from download_image import download_image
 
 def get_file_extension(url: str):
     path = unquote(urlsplit(url).path)
@@ -40,15 +40,7 @@ def generate_filename(item, index):
     extension = get_file_extension(get_image_url(item))
     return f"{index}_apod_{item['date']}{extension}"
 
-
-def download_image(url, path):
-    photo_response = requests.get(url)
-    photo_response.raise_for_status()
-
-    with open(path, 'wb') as file:
-        file.write(photo_response.content)
-
-def download_nasa_apod(api_key, folder=None, count=30):
+def download_nasa_apod(api_key, folder=None):
     data = fetch_apod_data(api_key)
     for index, item in enumerate(data, start=1):
         if not should_skip_item(item):
