@@ -5,9 +5,10 @@ from fetch_spacex_images import fetch_spacex_launch
 from nasa_apod_images import download_nasa_apod
 from nasa_epic_images import download_nasa_epic
 
+dotenv.load_dotenv('.env')
+NASA_API_KEY = os.environ["NASA_API_KEY"]
+
 if __name__ == "__main__":
-    dotenv.load_dotenv('.env')
-    NASA_API_KEY = os.environ["NASA_API_KEY"]
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--fld', help='название папки') 
