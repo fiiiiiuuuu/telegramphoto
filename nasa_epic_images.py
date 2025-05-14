@@ -26,7 +26,8 @@ def build_epic_image_url(image_data, api_key):
     params = {"api_key": api_key}
 
     encoded_params = urlencode(params)
-    return f"{epic_url}{formatted_date}/png/{image_name}.png?{encoded_params}"
+    url = f"{epic_url}{formatted_date}/png/{image_name}.png?{encoded_params}"
+    return url
 
 
 def download_nasa_epic(api_key, folder=None):
