@@ -3,9 +3,7 @@ import os
 from download_image import download_image
 
 def build_spacex_url(launch_id):
-    if launch_id:
-        return f"https://api.spacexdata.com/v5/launches/{launch_id}"
-    return "https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a"
+    return f"https://api.spacexdata.com/v5/launches/{launch_id}"
 
 def fetch_spacex_data(url):
     response = requests.get(url)
