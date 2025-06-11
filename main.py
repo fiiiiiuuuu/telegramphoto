@@ -10,8 +10,9 @@ def main():
     dotenv.load_dotenv('.env')
     nasa_api_key = os.environ["NASA_API_KEY"]
     parser = argparse.ArgumentParser()
-    parser.add_argument('--fld', default='photos', help='название папки (необязательно)') 
-    parser.add_argument('--lid', nargs='?', const='5eb87d47ffd86e000604b38a', default=None, help='айди для фото запусков spacex (необязательно)')    
+    parser.add_argument('--fld', default='photos', help='название папки (необязательно)')
+    parser.add_argument('--lid', nargs='?', const='5eb87d47ffd86e000604b38a',
+                        default=None, help='айди для фото запусков spacex (необязательно)')
     parser.add_argument('--apod', action='store_true', help='загрузка картинок дня')
     parser.add_argument('--epic', action='store_true', help='загрузка фотографий земли')
     args = parser.parse_args()
@@ -26,5 +27,6 @@ def main():
     if args.epic:
         download_nasa_epic(nasa_api_key, folder)
 
+
 if __name__ == "__main__":
-    main() 
+    main()

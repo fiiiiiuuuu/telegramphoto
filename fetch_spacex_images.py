@@ -2,14 +2,16 @@ import requests
 import os
 from download_image import download_image
 
+
 def fetch_spacex_data(url):
     response = requests.get(url)
     response.raise_for_status()
     return response.json()
 
+
 def extract_image_links(api_response):
     return api_response.get('links', {}).get('flickr', {}).get('original', {})
-        
+
 
 def fetch_spacex_launch(launch_id=None, folder=None):
     url = f"https://api.spacexdata.com/v5/launches/{launch_id}"

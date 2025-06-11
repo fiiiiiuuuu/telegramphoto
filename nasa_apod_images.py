@@ -4,6 +4,7 @@ from urllib.parse import urlsplit, unquote
 from os.path import splitext, split
 from download_image import download_image
 
+
 def get_file_extension(url: str):
     path = unquote(urlsplit(url).path)
     filename = split(path)[1]
@@ -23,14 +24,14 @@ def fetch_apod_data(api_key, count=30):
 
 def should_skip_item(item):
     if 'url' not in item:
-            print('no url. skip')
-            return False
+        print('no url. skip')
+        return False
 
     if item['media_type'] != 'image':
         print('this is video. skip')
         return False
     return True
-    
+
 
 def get_image_url(item):
     return item['hdurl'] if 'hdurl' in item else item['url']
@@ -39,6 +40,7 @@ def get_image_url(item):
 def generate_filename(item, index):
     extension = get_file_extension(get_image_url(item))
     return f"{index}_apod_{item['date']}{extension}"
+
 
 def download_nasa_apod(api_key, folder=None):
     data = fetch_apod_data(api_key)
@@ -50,6 +52,5 @@ def download_nasa_apod(api_key, folder=None):
         filename = generate_filename(item, index)
         file_path = os.path.join(folder, filename)
 
-        
         download_image(image_url, file_path)
         print(f'Фото сохранено как: {filename}')
