@@ -7,6 +7,8 @@ from nasa_epic_images import download_nasa_epic
 
 
 def main():
+    dotenv.load_dotenv('.env')
+    nasa_api_key = os.environ["NASA_API_KEY"]
     parser = argparse.ArgumentParser()
     parser.add_argument('--fld', default='photos', help='название папки (необязательно)') 
     parser.add_argument('--lid', nargs='?', const='5eb87d47ffd86e000604b38a', default=None, help='айди для фото запусков spacex (необязательно)')    
@@ -20,12 +22,9 @@ def main():
     if args.lid:
         fetch_spacex_launch(args.lid, folder)
     if args.apod:
-        download_nasa_apod(NASA_API_KEY, folder)
+        download_nasa_apod(nasa_api_key, folder)
     if args.epic:
-        download_nasa_epic(NASA_API_KEY, folder)
+        download_nasa_epic(nasa_api_key, folder)
 
 if __name__ == "__main__":
-    dotenv.load_dotenv('.env')
-    NASA_API_KEY = os.environ["NASA_API_KEY"]
-
     main() 
