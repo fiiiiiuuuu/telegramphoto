@@ -6,10 +6,6 @@ import argparse
 import time
 
 
-def get_photos():
-     return os.listdir(parse_args().fld)
-
-
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--fld', default='photos', help='название папки (необязательно)')
@@ -17,8 +13,8 @@ def parse_args():
     return parser.parse_args()
 
 
-def send_photo(bot, chat_id, photos, retry_delay, max_retries=5):
-        random_photo = os.path.join(parse_args().fld, random.choice(photos))
+def send_photo(bot, chat_id, photos, fld_name, retry_delay, max_retries=5):
+        random_photo = os.path.join(fld_name, random.choice(photos))
         for attempt in range(max_retries):
                 try:
                     with open(random_photo, "rb") as file:
@@ -39,20 +35,21 @@ def send_photo(bot, chat_id, photos, retry_delay, max_retries=5):
 
 
 def main():
-    bot = telegram.Bot(token=TG_BOT_TOKEN)
-    chat_id = TG_CHAT_ID
+    dotenv.load_dotenv('.env')
+    tg_bot_token = os.environ["TG_BOT_TOKEN"]
+    tg_chat_id = os.environ["TG_CHAT_ID"]
+    bot = telegram.Bot(token=tg_bot_token)
+    chat_id = tg_chat_id 
+    fld_name = parse_args().fld
+    delay = parse_args().delay
 
-    photos = get_photos()
+    photos = os.listdir(fld_name)
 
     while True:
-        send_photo(bot, chat_id, photos, retry_delay=5)
-        time.sleep(parse_args().delay)
+        send_photo(bot, chat_id, photos, fld_name, retry_delay=5)
+        time.sleep(delay)
         random.shuffle(photos)
 
 
 if __name__ == '__main__':
-    dotenv.load_dotenv('.env')
-    TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
-    TG_CHAT_ID = os.environ["TG_CHAT_ID"]
-    
     main()
