@@ -2,7 +2,7 @@ import requests
 import os
 import datetime
 from download_image import download_image
-from urllib.parse import urlencode
+from requests import Request
 
 
 def fetch_nasa_epic(api_key):
@@ -22,12 +22,11 @@ def build_epic_image_url(image_data, api_key):
     formatted_date = format_epic_date(image_data['date'])
     image_name = image_data['image']
 
-    epic_url = f"https://api.nasa.gov/EPIC/archive/natural/"
+    epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{formatted_date}/png/{image_name}.png"
     params = {"api_key": api_key}
 
-    encoded_params = urlencode(params)
-    url = f"{epic_url}{formatted_date}/png/{image_name}.png?{encoded_params}"
-    return url
+    prepared_request = Request('GET', epic_url, params=params).prepare()
+    return prepared_request.url
 
 
 def download_nasa_epic(api_key, folder=None):
