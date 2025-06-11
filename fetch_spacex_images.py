@@ -2,9 +2,6 @@ import requests
 import os
 from download_image import download_image
 
-def build_spacex_url(launch_id):
-    return f"https://api.spacexdata.com/v5/launches/{launch_id}"
-
 def fetch_spacex_data(url):
     response = requests.get(url)
     response.raise_for_status()
@@ -15,7 +12,7 @@ def extract_image_links(api_response):
         
 
 def fetch_spacex_launch(launch_id=None, folder=None):
-    url = build_spacex_url(launch_id)
+    url = f"https://api.spacexdata.com/v5/launches/{launch_id}"
     data = fetch_spacex_data(url)
     links = extract_image_links(data)
     if links:
